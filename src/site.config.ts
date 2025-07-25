@@ -100,16 +100,16 @@ export const integ: IntegrationUserConfig = {
   links: {
     // Friend logbook
     logbook: [
-      { date: '2024-07-01', content: 'Lorem ipsum dolor sit amet.' },
-      { date: '2024-07-01', content: 'vidit suscipit at mei.' },
-      { date: '2024-07-01', content: 'Quem denique mea id.' }
+      // { date: '2024-07-01', content: 'Lorem ipsum dolor sit amet.' },
+      // { date: '2024-07-01', content: 'vidit suscipit at mei.' },
+      // { date: '2024-07-01', content: 'Quem denique mea id.' }
     ],
     // Yourself link info
     applyTip: [
-      { name: 'Name', val: theme.title },
-      { name: 'Desc', val: theme.description || 'Null' },
-      { name: 'Link', val: 'https://www.tonyyin0418.com/' },
-      { name: 'Avatar', val: 'https://www.tonyyin0418.com/favicon/favicon.ico' }
+      // { name: 'Name', val: theme.title },
+      // { name: 'Desc', val: theme.description || 'Null' },
+      // { name: 'Link', val: 'https://www.tonyyin0418.com/' },
+      // { name: 'Avatar', val: 'https://www.tonyyin0418.com/favicon/favicon.ico' }
     ]
   },
   // Enable page search function
