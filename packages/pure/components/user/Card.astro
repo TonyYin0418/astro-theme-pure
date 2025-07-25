@@ -1,12 +1,12 @@
 ---
 import { cn } from '../../utils'
 
-const { as: Tag = 'div', class: className, href, heading, subheading, date } = Astro.props
+const { as: Tag = 'div', class: className, href, heading, subheading, date, icon } = Astro.props
 ---
 
 <Tag
   class={cn(
-    'not-prose block relative rounded-2xl border bg-muted px-5 py-3',
+    'not-prose block relative rounded-2xl border border-border bg-muted px-5 py-3',
     href && 'transition-all hover:border-foreground/25 hover:shadow-sm',
     className
   )}
@@ -18,6 +18,7 @@ const { as: Tag = 'div', class: className, href, heading, subheading, date } = A
       <p class='text-muted-foreground'>{subheading}</p>
       <p class='text-muted-foreground'>{date}</p>
     </div>
+    <img class='absolute end-0 z-0 m-0 -my-3 h-full w-1/2 object-cover opacity-40' src={icon} />
     <slot />
   </div>
 </Tag>
