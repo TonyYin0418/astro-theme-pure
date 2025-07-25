@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets'
+
 import type { iconsType } from 'astro-pure/types'
 import { Button, Collapse, Icon } from 'astro-pure/user'
 import PageLayout from '@/layouts/CommonPage.astro'
@@ -43,6 +44,17 @@ const headings = [
         name: 'A Simple Web Server',
         description: '基于C++ Socket的简易服务器，2024_Fall程序设计大作业',
         links: [{ type: 'github', href: 'https://github.com/TonyYin0418/SimpleWebServer' }]
+      },
+      {
+        name: 'CSAPP Cheat Sheet',
+        description: '计算机系统基础课程的速查表，用于期末考试',
+        links: [
+          { type: 'github', href: 'https://github.com/TonyYin0418/csapp-cheat-sheet' },
+          {
+            type: 'doc',
+            href: 'https://raw.githubusercontent.com/TonyYin0418/csapp-cheat-sheet/main/pdf/final.pdf'
+          }
+        ]
       }
     ]}
   />
@@ -52,35 +64,42 @@ const headings = [
     class='my-2'
     projects={[
       {
-        name: '2024_Fall 高级语言程序设计',
-        description: '部分练习题、全部实验的代码实现与思路',
-        links: [{ type: 'github', href: 'https://github.com/TonyYin0418/Programming_Course' }]
-      },
-      {
-        name: '2025_Spring 计算机系统基础',
-        description: '笔记、实验、作业的代码实现与思路',
+        name: '计算机系统基础 WHU-2025春季学期',
+        description: '计算机系统基础课程的笔记与代码',
         links: [
           {
             type: 'github',
-            href: 'https://github.com/TonyYin0418/2025_SPRING_Introduction_to_Computer_System'
+            href: 'https://github.com/TonyYin0418/Introduction-to-Computer-System-2025Spring'
           }
+        ]
+      },
+      {
+        name: '概率论与数理统计 WHU-2025春季学期',
+        description: '概率论与数理统计课程的笔记、真题与作业',
+        links: [
+          {
+            type: 'github',
+            href: 'https://github.com/TonyYin0418/Probability-Theory-and-Statistics-2025Spring'
+          }
+        ]
+      },
+      {
+        name: '数据结构 WHU-2025春季学期',
+        description: '数据结构课程的部分作业',
+        links: [
+          { type: 'github', href: 'https://github.com/TonyYin0418/Data-Structure-2025SPRING' }
         ]
       }
     ]}
   />
 
-  <h2 id='others'>Others</h2>
+  <h2 id='others'>Private</h2>
   <ProjectSection
     projects={[
       {
-        name: 'Dynamic-Programming',
-        description: '高中的动态规划研学课题',
-        links: [{ type: 'github', href: 'https://github.com/TonyYin0418/Dynamic-Programming' }]
-      },
-      {
-        name: 'Computational-Geometry',
-        description: '高中的计算几何研学课题',
-        links: [{ type: 'github', href: 'https://github.com/TonyYin0418/Computational-Geometry' }]
+        name: 'Nand2Tetris 软件系统实践 WHU-2025第三学期',
+        description: '软件系统实践课程的笔记、代码与资料',
+        links: [{ type: 'github', href: 'https://github.com/TonyYin0418/Nand2Tetris-2025Spring' }]
       }
     ]}
   />
