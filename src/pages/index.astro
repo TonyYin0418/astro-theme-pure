@@ -12,9 +12,14 @@ import SkillLayout from '@/components/home/SkillLayout.astro'
 import avatar from '@/assets/avatar.png'
 import config from '@/site-config'
 
-const languages = ['Html', 'JavaScript', 'CSS', 'Shell']
-const frontend = ['TypeScript', 'Vite', 'Webpack', 'Astro']
-const backend = ['Vercel', 'Waline']
+// const languages = ['Html', 'JavaScript', 'CSS', 'Shell']
+// const frontend = ['TypeScript', 'Vite', 'Webpack', 'Astro']
+// const backend = ['Vercel', 'Waline']
+
+const Programming = ['Python', 'PyTorch', 'C', 'C++']
+const Web = ['HTML', 'CSS', 'Vue.js', 'JavaScript']
+const Tools = ['VSCode', 'Linux', 'Git', 'Docker']
+const Text = ['Markdown', 'LaTeX']
 
 const MAX_POSTS = 10
 const allPosts = await getBlogCollection()
@@ -34,21 +39,16 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
       <div class='flex flex-col items-center gap-y-4'>
         <h1 class='text-3xl font-bold'>{config.author}</h1>
         <div class='flex flex-wrap justify-center gap-x-7 gap-y-3'>
-          <Label title='China'>
+          <Label title='Wuhan / China'>
             <Icon name='location' class='size-5' slot='icon' />
           </Label>
-          <Label
-            title='Source code'
-            as='a'
-            href='https://github.com/cworld1/astro-theme-pure'
-            target='_blank'
-          >
+          <Label title='Github' as='a' href='https://github.com/tonyyin0418' target='_blank'>
             <Icon name='github' class='size-5' slot='icon' />
           </Label>
         </div>
       </div>
 
-      {/* Get template */}
+      <!-- {/* Get template */}
       <a
         href='https://github.com/cworld1/astro-theme-pure'
         target='_blank'
@@ -61,17 +61,13 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
           <span class='size-2 rounded-full bg-green-400'></span>
         </span>
         <p class='font-medium text-muted-foreground'>Get Template</p>
-      </a>
+      </a> -->
     </section>
 
     <div id='content' class='animate flex flex-col gap-y-10 md:w-4/5 lg:w-5/6'>
       <Section title='About'>
-        <p class='text-muted-foreground'>Developer / Designer</p>
-        <p class='text-muted-foreground'>
-          Lorem ipsum dolor sit amet, vidit suscipit at mei. Quem denique mea id. Usu ei regione
-          indoctum dissentiunt, cu meliore fuisset mei, vel quod voluptua ne. Ex dicat impedit mel,
-          at eum oratio possit voluptatum.
-        </p>
+        <p class='text-muted-foreground'>CS Student</p>
+        <p class='text-muted-foreground'>就读于武汉大学雷军班，目前在研究人工智能+跨学科场景。</p>
         <Button title='More about me' class='w-fit self-end' href='/about' variant='ahead' />
       </Section>
       {
@@ -121,24 +117,23 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
       <Section title='Education'>
         <Card
           as='a'
-          heading='Lorem ipsum'
-          subheading='Lorem ipsum dolor sit amet, vidit suscipit at mei.'
-          date='August 2021 - July 2025'
-          href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
-        >
-          {
-            /* <ul class='ms-4 list-disc text-muted-foreground'>
-          <li>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore debitis recusandae, ut
-            molestiae laboriosam pariatur!
-          </li>
-          <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae, pariatur!</li>
-        </ul> */
-          }
-        </Card>
+          heading='武汉大学'
+          subheading='计算机科学与技术 雷军班'
+          date='August 2024 - Present'
+          href='https://whu.edu.cn'
+          icon='/icons/WHU.svg'
+        />
+        <Card
+          as='a'
+          heading='北京亦庄实验中学'
+          subheading='北京十一学校教育集团 直升班'
+          date='September 2018 - July 2024'
+          href='https://www.bjeaedu.com'
+          icon='/icons/BJEA.svg'
+        />
       </Section>
 
-      <Section title='Website List'>
+      <!-- <Section title='Website List'>
         <div class='grid grid-cols-1 gap-3 sm:grid-cols-2'>
           <ProjectCard
             href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
@@ -165,9 +160,9 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
             imagePath='/src/assets/projects/wen-qiao-g_w8I64FiO0-unsplash.jpg'
           />
         </div>
-      </Section>
+      </Section> -->
 
-      <Section title='Certifications'>
+      <!-- <Section title='Certifications'>
         <Card
           as='a'
           heading='Lorem ipsum'
@@ -175,12 +170,13 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS)
           date='July 2024'
           href='https://www.youtube.com/watch?v=dQw4w9WgXcQ'
         />
-      </Section>
+      </Section> -->
 
       <Section title='Skills'>
-        <SkillLayout title='Languages' skills={languages} />
-        <SkillLayout title='Frontend' skills={frontend} />
-        <SkillLayout title='Backend' skills={backend} />
+        <SkillLayout title='Programming' skills={Programming} />
+        <SkillLayout title='Web' skills={Web} />
+        <SkillLayout title='Tools' skills={Tools} />
+        <SkillLayout title='Text' skills={Text} />
       </Section>
     </div>
     <Quote class='mt-12' />
