@@ -24,7 +24,7 @@ Unix I/O 的设计目标是简化 I/O 操作，使其尽可能简单和一致。
 
 ### Overview
 
-- A Linux**「File」**is a sequence of m bytes.
+- A Linux **「File」** is a sequence of m bytes.
 - 所有的 I/O 设备都被视为文件，甚至内核也被视为文件。
     - `cat /proc/$$/status` 可以查看当前进程的状态。
     - 甚至每个进程都有一个 `/proc/PID` 目录，里面的 `/fd` 是该进程的文件描述符。
