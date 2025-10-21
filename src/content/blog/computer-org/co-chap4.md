@@ -21,7 +21,7 @@ Chapter 4: The Processor
 - Arithmetic：add, sub, and, or.
 - Conditional branch：beq.
 
-**单周期处理器**：**所有指令都在一个时钟周期内完成。**
+**单周期处理器**： **所有指令都在一个时钟周期内完成。**
 
 CPU 有两部分组成：DataPath 数据通路和 ControlPath 控制通路。
 
@@ -51,7 +51,7 @@ CPU 有两部分组成：DataPath 数据通路和 ControlPath 控制通路。
 
 **Edge-triggered**：每个周期有两个边缘，只有在上升沿或下降沿时，才把输入的数据送到输出端。
 
-**Register：**
+**Register**：
 
 - 在回路中存储数据。
 - 有一个信号 $\text{Write}$，表示是否把输入端的数据送到输出端：
@@ -87,15 +87,15 @@ CPU 有两部分组成：DataPath 数据通路和 ControlPath 控制通路。
 
 R-format：`add x5, x6, x7`.
 
-**需要的部件：**寄存器堆 RF，ALU。
+**需要的部件**：寄存器堆 RF，ALU。
 
-**步骤：**
+**步骤**：
 
 - **读寄存器**——操作数给 RF，取出两个寄存器的值；
 - **计算**——送到 ALU 进行计算；
 - **写寄存器**——操作数给 RF，指定 RF 的 Write 信号为高电平，把 ALU 的输出送回到 RF 中。
 
-**示意图：**
+**示意图**：
 
 ![image-20251014191334357](./img-06.png)
 
@@ -107,15 +107,15 @@ Load：`lw x5, 3(x6)`.
 
 **Imm Generator**：把立即数部分取出，进行符号扩展，以匹配 32 位。
 
-**步骤：**
+**步骤**：
 
 - **计算地址**：
     - 从 RF 中**取出寄存器的值**（并行）；
     - 立即数通过 Imm Gen 进行 **sign-extend** 后送到 ALU（并行）；
 - **读 Memory**：把刚才计算得到地址给 Memory
-- **取值：**从 Memory 读，调整 Memory 的 Read 信号为高电平，得到的值送到 RF 中。
+- **取值**：从 Memory 读，调整 Memory 的 Read 信号为高电平，得到的值送到 RF 中。
 
-**示意图：**
+**示意图**：
 
 ![image-20251014192844388](./img-07.png)
 
@@ -123,7 +123,7 @@ Load：`lw x5, 3(x6)`.
 
 Store：`sw x5, 3(x6)`.
 
-**步骤：**与 Load 类似，计算地址部分完全相同。
+**步骤**：与 Load 类似，计算地址部分完全相同。
 
 - **计算地址**：
     - 从 RF 中**取出寄存器的值**（并行）；
@@ -134,9 +134,9 @@ Store：`sw x5, 3(x6)`.
 
 Branch：`beq x5, x6, label`.
 
-**需要的部件：**Imm Generator，ALU，寄存器堆 RF，PC，额外的 adder。
+**需要的部件**：Imm Generator，ALU，寄存器堆 RF，PC，额外的 adder。
 
-**步骤：**
+**步骤**：
 
 - **读 RF**：从 RF 中取出两个寄存器的值；
 - **计算比较**（并行）：用 ALU 进行减法运算，判断是否相等；
@@ -245,7 +245,7 @@ ROM 中，每一行是一个存储单元，对应一个**微指令**：
 
 JAL：`jal rd, Imm`。
 
-**步骤：**
+**步骤**：
 
 - 取指
 - 计算地址：
