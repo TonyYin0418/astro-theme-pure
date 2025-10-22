@@ -4,7 +4,7 @@ publishDate: 2025-10-09
 description: '武汉大学2025秋季学期 计算机组成 第三章'
 tags:
   - whu
-  - csapp
+  - computer-org
 
 language: '中文'
 ---
