@@ -4,7 +4,7 @@ publishDate: 2022-08-28
 description: '《文心》思维导图'
 tags:
   - high-school
-hidden: true
+draft: true
 language: '中文'
 ---
 
