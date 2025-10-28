@@ -24,7 +24,7 @@ Chapter 1: Computer Abstractions and Technology
 
 **Machine Structure**：运算器（Datapath）、控制器（Control）、存储器、输入、输出。
 
-![image-20250909192941479](./img-01.png)
+![image-20250909192941479](images/img-01.png)
 
 其中连接软件和硬件的接口是黄色部分：ISA（Instruction Set Architecture，指令集架构）是机器结构的一个重要方面，定义了程序员与计算机硬件之间的接口。只有设计好了ISA，才能设计出计算机硬件。（第二章）
 
@@ -65,7 +65,7 @@ Chapter 1: Computer Abstractions and Technology
 
 CPU 具有时钟周期，是固定的时间间隔 **Clock cycle time**，由 CPU Frequency 主频决定
 
-![image-20250911105100806](./img-02.png)
+![image-20250911105100806](images/img-02.png)
 
 **Clock period** 和 **Clock Frequency**：
 

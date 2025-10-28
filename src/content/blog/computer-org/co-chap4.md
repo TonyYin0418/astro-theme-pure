@@ -4,7 +4,7 @@ publishDate: 2025-10-21
 description: '武汉大学2025秋季学期 计算机组成 第四章'
 tags:
   - whu
-  - computer-org
+  - csapp
 
 language: '中文'
 ---
@@ -27,7 +27,7 @@ CPU 有两部分组成：DataPath 数据通路和 ControlPath 控制通路。
 
 功能部件分为：组合逻辑部件和时序部件（状态部件）。
 
-## 指令的执行
+## Instruction Execution
 
 1. 取指，**同时进行**两步：
     - 把 PC 的值送给指令存储器，指令存储器从内存取出指令。
@@ -45,7 +45,7 @@ CPU 有两部分组成：DataPath 数据通路和 ControlPath 控制通路。
 
 ### 组合逻辑部件
 
-![image-20251014183635159](./img-04.png)
+![image-20251014183635159](images/img-04.png)
 
 ### 时序部件
 
@@ -77,11 +77,11 @@ CPU 有两部分组成：DataPath 数据通路和 ControlPath 控制通路。
 - 把 PC 的值送给指令存储器，指令存储器从内存取出指令。
 - $\text{PC}\leftarrow \text{PC}+4$.
 
-需要的部件：adder，寄存器 PC，Intruction memory。
+需要的部件：adder，寄存器 PC，Instruction memory。
 
-![image-20251014190151964](./img-05.png)
+![image-20251014190151964](images/img-05.png)
 
-由于这些部件都在单周期内完成，所以可以同时现两个操作。
+由于这些部件都在单周期内完成，所以可以同时进行两个操作。
 
 ### R-format Instructions
 
@@ -97,7 +97,7 @@ R-format：`add x5, x6, x7`.
 
 **示意图**：
 
-![image-20251014191334357](./img-06.png)
+![image-20251014191334357](images/img-06.png)
 
 ### Load Instructions
 
@@ -117,7 +117,7 @@ Load：`lw x5, 3(x6)`.
 
 **示意图**：
 
-![image-20251014192844388](./img-07.png)
+![image-20251014192844388](images/img-07.png)
 
 ### Store Instruction
 
@@ -150,7 +150,7 @@ Branch：`beq x5, x6, label`.
 
 **示意图**：
 
-![image-20251014194659706](./img-08.png)
+![image-20251014194659706](images/img-08.png)
 
 ### Full DataPath
 
@@ -164,7 +164,7 @@ Branch：`beq x5, x6, label`.
 
 **示意图**：
 
-![image-20251014195257170](./img-09.png)
+![image-20251014195257170](images/img-09.png)
 
 ---
 
@@ -188,13 +188,13 @@ ALU 需要负责多种指令，对应不同的控制信号：
 
 Control Path 根据指令的 op, func3, func7 字段生成 ALU 的控制信号。
 
-![image-20251014200714659](./img-10.png)
+![image-20251014200714659](images/img-10.png)
 
-真值表允许出现：$0, 1, \text{X}$ 三种状态，其中 $\text{X}$ 是高阻态，表示不关心。
+真值表允许出现：$0, 1, \text{X}$ 三种状态，其中 $\text{X}$ 表示“无关（don't care）”；高阻态通常记为 $\text{Z}$。
 
 ### Control Unit
 
-![image-20251016100651314](./img-11.png)
+![image-20251016100651314](images/img-11.png)
 
 在 ALU Control 之外，Control Path 还需要根据 op 部分，生成以下控制信号：
 
@@ -218,7 +218,7 @@ Control Path 根据指令的 op, func3, func7 字段生成 ALU 的控制信号�
 
 根据上述逻辑，列出真值表，用组合逻辑实现。
 
-![image-20251016103236835](./img-12.png)
+![image-20251016103236835](images/img-12.png)
 
 输入 Inst[6:0]，经过组合逻辑，输出各个控制信号。
 
@@ -255,9 +255,11 @@ JAL：`jal rd, Imm`。
 
 **Data / Control Flow**：
 
-- 为了把 PC + Imm 送到 PC，因此需要对右上角的 Mux 进行修改——增加一个 PCSrc 信号，配合 OR 门，强制 Mux 选择 PC + Imm。
+- 为了把 `PC + Imm` 送到 PC，需要对右上角的 Mux 增加 `PCSrc` 信号（与分支控制组合），在需要跳转时选择 `PC + Imm`。
 
-- 为了把 PC + 4 写回寄存器 x1，因此需要对寄存器堆 RF 进行修改——增加一个 Mux，选择写回寄存器的值是 ALU 的输出，还是 PC + 4。Mux 由新增信号 RegDst 控制。当然，也可以把 Mux 换成一个三选一的 Mux，不过不影响控制信号的数量，仍然需要一个 RegDst 信号。
+- 为了把 `PC + 4` 写回寄存器 `rd`（常用作链接寄存器 x1），需要在 WB 端扩展写回选择：
+  - 将 `MemtoReg` 扩展为两位的选择信号，例如 `00: ALUOut, 01: ReadData, 10: PC+4`（也可命名为 `ResultSrc/WBSel`）。
+  - `RegWrite=1` 时写回 `rd`。
 
 ### JALR Instruction
 
@@ -273,13 +275,22 @@ JALR：`jalr rd, rs1, Imm`
 
 设计图和真值表如下。
 
-![](./img-13.png)
+![](images/img-13.png)
 
-![](./img-14.jpg)
+![](images/img-14.jpg)
 
-### ORi Instruction
+### ORI Instruction
 
-补充一个与立即数有关的指令。
+I-type：`ori rd, rs1, imm`。对 `rs1` 与有符号扩展后的 `imm` 做按位或，结果写回 `rd`。
+
+控制要点：
+- `RegWrite = 1`
+- `ALUSrc = 1`（ALU 第二个输入选立即数）
+- `ALUCtrl = OR`
+- `MemRead = 0`, `MemWrite = 0`, `MemtoReg = 0`（WB 选 ALU 结果）
+
+示例：`ori x5, x3, 0x0FF` 将 `x3` 与 `0x0FF` 做 OR，结果写入 `x5`。
+
 
 ## Performance
 
@@ -289,4 +300,144 @@ CPU 时钟周期由**最长的延迟路径**决定，关键路径决定：更短
 
 计算指令的延迟路径，常常忽略 MUX, Control Unit, PC 等延迟较小的部件。之后根据并行和串行的关系，计算各个指令的延迟路径。
 
-后序会介绍**流水线**，把各个指令的执行过程拆分成多个阶段，让不同指令的不同阶段可以并行执行，从而提升性能。
+后序会介绍**流水线**，可以提升性能。
+
+## Multicycle
+
+多周期处理器：**每条指令分多个时钟周期完成**。
+
+把每条指令分成多个 step，每个 step 在一个时钟周期内完成。这样可以增加主频，CPI 增大。
+
+这样可以让较短的指令执行更快，因为不需要等待最长指令完成，但还是串行执行每条指令。
+
+### Datapath
+
+由于每个时钟周期结束后，指令可能并没有结束，因此每个 unit 的输出值需要**存储在寄存器**中，供下一个周期继续执行这条指令的后续 step 使用，包括：
+- IR：Instruction Register，存储当前指令。
+- A, B：存储从寄存器堆读出的两个寄存器
+- MDR：Memory Data Register，存储从内存读出的数据
+- ALUOut：存储 ALU 的输出
+
+另外，由于每个周期只执行一个 step，因此原来有很多部件是多余的，可以只保留一份。比如 Instruction Memory 和 Data Memory 可以合并成一个 Memory；Adder 和 ALU 也可以合并成一个 ALU。
+
+简略的 Datapath 示意图如下。
+
+![](images/img-15.jpg)
+
+### Control
+
+当然多周期也需要 Control Path 来生成控制信号，所需要的控制信号类别不变，而每个指令的每个 step 都需要不同的控制信号。
+
+因此需要引入**时序信号**，表示当前处于哪个 step，由**状态机**生成对应的控制信号。
+
+状态机是一个**有限状态机**，每个状态对应一个 step。输入操作码和时钟信号，输出当前 step 所需的控制信号。
+
+## Pipeline
+
+在 Multicycle 的基础上，Pipeline 技术能让 **多个指令同时执行**。
+
+流水线的核心思想是 **把指令的执行过程拆分成多个阶段**，从而让不同指令的不同阶段可以 **并行执行**。
+
+![](images/img-16.png)
+
+可以看到，对于中间的周期，每个周期都能完成一条指令的执行。
+
+### RISC-V Pipeline
+
+RISC-V 指令被拆分成五个阶段，每个阶段对应一个时钟周期：
+
+1. IF：Instruction Fetch，取指令
+2. ID：Instruction Decode，译码 & 读寄存器
+3. EX：Instruction Execute，执行操作 或 计算地址
+4. MEM：Memory Access，访存
+5. WB：Write Back，写回寄存器
+
+这被称为 5-stage Pipeline 五级流水线。如果 $5$ 个阶段延迟相等，则：
+
+$$
+\text{Execution Time}_{\text{pipelined}}=\frac{\text{Execution Time}_{\text{non-pipeline}}}{5}
+$$
+
+然而需要注意，**单个指令的 Latency 并没有减少**，而且与单周期对比，由于必须经过五级，单个指令的延迟反而增加了。
+
+之所以能加速，主要是因为 **Throughput 吞吐量** 的提升，也就是 **单位时间内完成的指令数** 增加了。
+
+> **单发射和双发射**：单发射指每个时钟周期只能发射一条指令，而双发射指每个时钟周期可以发射两条指令。双发射可以进一步提高吞吐量，但需要更复杂的硬件支持。
+
+流水线的实现与 Multicycle 类似，也需要在每个阶段之间增加**Pipeline registers 流水线寄存器**，其命名比较统一：IF/ID、ID/EX、EX/MEM、MEM/WB，分别存储每个阶段的输出，供下一个阶段使用。
+
+![](images/img-17.png)
+
+然而，现有五级流水线图还缺少“写回路径与目的寄存器 rd 的逐级保留”，导致 WB 阶段无法把结果写回寄存器堆。
+
+WB 需要写回目的寄存器号 `rd` 和写回数据，所以前者需要 **逐级保留** 于每个 Pipeline Register。
+
+这并不涉及 Structure Hazards，因为 RegisterFile 的 Read / Write 都很快，一个周期内可以同时完成 Read 和 Write。所以虽然有多个阶段争用一个硬件资源，但是并不冲突。
+
+![](images/img-18.png)
+## Pipeline Hazards
+
+上述流水线的并行执行会引入**冒险 Hazards**，主要有三种类型。
+
+### Structure Hazards
+
+**现象**：同一周期多个阶段**争用同一硬件资源**，所以这个问题通常都需要在设计结构的时候解决。
+
+**解决方法**：增加新的部件，或者流水线阻塞（等着上一条指令结束占用）。
+
+### Data Hazards
+
+#### R-format Instruction
+
+**现象**：`add x3, x1, x2` 结束后，才有 `x3` 的结果，才能执行 `sub x5, x3, x4`。
+
+正常情况下，需要等五个周期全结束，WB 后，才能取得 x3 的数据。然而这样的话，Pipeline 完全没有并行，效率很低。这种现象叫做 **Pipeline Bubble**.
+
+![](images/img-19.png)
+
+而之所以只需要 bubble 两个周期，是因为前半个周期完成 WB，后半个周期完成 ID，这是 RF 的特性造成的：*RF 用下降沿 Write（前半个周期），用后半个周期 Read*；其余周期都是在上升沿 Write。
+
+**解决方法：Forwarding / Bypassing**。
+
+如图所示，直接增加从 **EX旁路**——EX/MEM.ALUOut -> ALU.in 的数据通路，无需等待结果被 WB 到寄存器。
+
+![](images/img-20.png)
+
+#### Load Instruction
+
+**现象：** `lw  x7, 0(x3)` 结束后，才有 `x7` 的结果，才能运行 `add x8, x7, x9`。
+load 指令的数据在 MEM 阶段末尾才可用，紧随其后的指令在 EX 阶段就需要该数据。
+
+**解决方法**：增加 **MEM 旁路**，如图所示，但是由于 load 指令与 R-format 指令不同，Pipeline 不得不阻塞一个周期。
+
+![](images/img-21.png)
+
+#### Code Scheduling
+
+这是另一种在某些情况有用的解决方法。编译器自动给汇编指令调整顺序，来避免 Data Hazards。如图所示，是 C 代码 `a = b + e; c = b + f;` 的两种实现，右侧的就可以避免 Hazards。
+
+![](images/img-22.png)
+### Control Hazards
+
+**现象**：对于 Branch 指令 `beq x5, x0, L1`，需要第三个周期结束，才能知道跳转到哪里。这几个周期中间会出现 Bubble。
+
+**解决方法**：
+- 阻塞
+- **Branch Prediction 分支预测**，分为静态预测 和 动态预测算法。
+
+#### Branch Prediction
+
+TODO。
+
+## Pipeline Operation
+### DataPath
+
+Datapath的分析有两种画图方法：
+
+**Single-Cycle Pipeline Diagram**：TODO
+
+**Multi-Cycle Pipeline Diagram**：TODO
+
+### Control
+
+TODO
